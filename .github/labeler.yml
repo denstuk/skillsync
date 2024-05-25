@@ -1,0 +1,21 @@
+Workflow:
+- changed-files:
+  - any-glob-to-any-file: .github/**
+
+Infrastructure:
+- changed-files:
+  - any-glob-to-any-file: apps/aws/**
+
+Frontend:
+- changed-files:
+  - any-glob-to-any-file: apps/web/**
+
+Backend:
+- changed-files:
+  - any-glob-to-any-file: apps/backend/**
+
+Feature:
+ - head-branch: ['^feature', 'feature']
+
+Bugfix:
+ - head-branch: ['^bugfix', 'bugfix']
