@@ -22,6 +22,7 @@ export class FargateService extends Construct {
         taskImageOptions: {
           image: ecs.ContainerImage.fromAsset(Config.backendPath),
           containerPort: Config.backendPort,
+          containerName: Config.appName,
         },
         publicLoadBalancer: true
       });

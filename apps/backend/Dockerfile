@@ -1,8 +1,15 @@
-FROM node:22-alpine
+FROM --platform=linux/amd64 node:22-alpine
+
 WORKDIR /usr/src/app
+
 COPY package*.json ./
+
 RUN npm install --only=production
+
 COPY . .
+
 RUN npm run build
+
 CMD [ "node", "dist/main.js" ]
+
 EXPOSE 3000
