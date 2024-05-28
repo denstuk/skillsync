@@ -35,5 +35,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
+    - name: Build Web App
+      run: cd apps/web && npm run build
+
     - name: Deploy CDK stack
       run: cd apps/aws && cdk deploy --require-approval never
