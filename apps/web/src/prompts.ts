@@ -1,17 +1,18 @@
-export const model = 'gpt-4o-2024-05-13'
-export const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-export const API_TOKEN = 'token-here'
+export const model = "gpt-4o-2024-05-13";
+export const API_ENDPOINT = "https://api.openai.com/v1/chat/completions";
+export const API_TOKEN = import.meta.env.VITE_AI_API_TOKEN;
 
 export const baseMessages = [
   {
-    role: 'system',
-    content: 'You are a technical expert. Your task is to evaluate knowledge of person who passes the test on provided technical topic and level, ' +
-      'provide answer options, accept user responses, give feedback on the correctness of the answers, ' +
-      'and summarize the results at the end of the test and provide feedback.' +
-      'Ensure that you return only valid JSON objects, do not wrap JSON into markdown.'
+    role: "system",
+    content:
+      "You are a technical expert. Your task is to evaluate knowledge of person who passes the test on provided technical topic and level, " +
+      "provide answer options, accept user responses, give feedback on the correctness of the answers, " +
+      "and summarize the results at the end of the test and provide feedback." +
+      "Ensure that you return only valid JSON objects, do not wrap JSON into markdown.",
   },
   {
-    role: 'user',
+    role: "user",
     content: `Communication Format
 1. Getting the Next Question
 User Request:
@@ -139,6 +140,6 @@ Questions should be clear and understandable.
 Feedback:
 Provide constructive feedback after each answer.
 Summary:
-Summarize the test results, praise the user for correct answers, and provide improvement plan.`
-  }
-]
+Summarize the test results, praise the user for correct answers, and provide improvement plan.`,
+  },
+];
