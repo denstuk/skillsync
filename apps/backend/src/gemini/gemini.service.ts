@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { GenerateContentRequest, GenerativeModel } from '@google/generative-ai';
-import { Quiz } from './dtos/quiz';
+import { Quiz, QuizSection } from './dtos/quiz';
 
 @Injectable()
 export class GeminiService {
@@ -27,7 +27,21 @@ export class GeminiService {
     const result = await this.model.generateContent(request);
     const response = await result.response;
     const text = response.text();
-    const jsonData = text.trim().replace(/^```json\s+|\s+```$/gm, '');
-    return jsonData as unknown as Quiz;
+    const sections = JSON.parse(
+      text.trim().replace(/^```json\s+|\s+```$/gm, ''),
+    ) as QuizSection[];
+    for (const section of sections) {
+      if (
+        !(
+          section.question &&
+          Array.isArray(section.choices) &&
+          section.correctAnswer
+        )
+      ) {
+        console.log(section);
+        throw Error('Generated quiz section is invalid');
+      }
+    }
+    return { sections };
   }
 }

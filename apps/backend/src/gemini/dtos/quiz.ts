@@ -5,5 +5,5 @@ export interface QuizSection {
 }
 
 export interface Quiz {
-  sections: QuizSection;
+  sections: QuizSection[];
 }
