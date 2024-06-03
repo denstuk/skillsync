@@ -1,12 +1,12 @@
-import React from 'react';
-import { Question as QuestionType } from '../types';
+import React from "react";
+import { Question as QuestionType } from "../types";
 
 interface QuestionProps {
   question: QuestionType;
   onAnswer: (answer: string) => void;
 }
 
-const Question: React.FC<QuestionProps> = ({ question, onAnswer }) => {
+const QuizQuestion: React.FC<QuestionProps> = ({ question, onAnswer }) => {
   return (
     <div className="question">
       <h2>{question.question}</h2>
@@ -21,4 +21,4 @@ const Question: React.FC<QuestionProps> = ({ question, onAnswer }) => {
   );
 };
 
-export default Question;
+export default QuizQuestion;
