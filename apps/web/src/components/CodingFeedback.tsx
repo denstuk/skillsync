@@ -12,9 +12,9 @@ interface FeedbackProps {
 const CodingFeedback: React.FC<FeedbackProps> = ({ task, solution }) => {
   const [showSolution, setShowSolution] = useState(true);
   return (
-    <div style={{ textAlign: "left" }}>
+    <div className="text-left mb-4">
       <input
-        id="sol"
+        id="solultion"
         type="checkbox"
         checked={showSolution}
         value={"Solution"}
@@ -22,7 +22,7 @@ const CodingFeedback: React.FC<FeedbackProps> = ({ task, solution }) => {
           setShowSolution(!showSolution);
         }}
       />
-      <label htmlFor="sol">Show Solution</label>
+      <label htmlFor="solultion">Show Solution</label>
       {showSolution ? (
         <CodeMirror
           value={solution}

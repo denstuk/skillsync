@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnswerResponse } from "../types";
 import CodingFeedback from "../components/CodingFeedback";
+import Layout from "../components/Layout";
+import Button from "../components/form/Button";
 
 interface ResultsPageProps {
   results: AnswerResponse | null;
@@ -23,24 +25,22 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ results }) => {
   if (!results) return null;
 
   return (
-    <div className="results-page">
-      <h1>Quiz Results</h1>
-      <p>
-        You answered {results.score} out of {results.total_questions} questions
-        correctly.
-      </p>
-      <p>{results.feedback}</p>
+    <Layout>
+      <h2 className="text-xl font-bold">Quiz Results</h2>
+      <div className="bg-white shadow-md rounded-lg w-full  p-6 my-4">
+        <p className="text-lg font-bold text-center">{results.feedback}</p>
+      </div>
       {results?.feedback_code && (
         <>
-          <p>Solution:</p>
+          <p className="text-lg font-bold text-center">Solution:</p>
           <CodingFeedback
-            task={results?.feedback_code}
-            solution={results.snippet_content}
+            task={results.snippet_content || ""}
+            solution={results?.feedback_code}
           />
         </>
       )}
-      <button onClick={handleClick}>Go to Home</button>
-    </div>
+      <Button onClick={handleClick}>Go to Home</Button>
+    </Layout>
   );
 };
 

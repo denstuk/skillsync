@@ -4,6 +4,7 @@ import "codemirror/theme/material.css";
 import React, { useState } from "react";
 import { Question } from "../types";
 import { UnControlled as CodeMirror } from "react-codemirror2";
+import Button from "./form/Button";
 
 interface QuestionProps {
   question: Question;
@@ -12,14 +13,15 @@ interface QuestionProps {
 
 const CodingQuestion: React.FC<QuestionProps> = ({ question, onAnswer }) => {
   const initialValue = question?.snippet_content;
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(initialValue || "");
 
   return (
-    <div style={{ textAlign: "left" }}>
-      {question.question}
+    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl p-6">
+      <p className="text-xl font-bold">{question.question}</p>
       <CodeMirror
         //no need to make it controlled component
         value={initialValue}
+        className="my-4"
         options={{
           mode: "javascript",
           theme: "material",
@@ -29,7 +31,7 @@ const CodingQuestion: React.FC<QuestionProps> = ({ question, onAnswer }) => {
           setValue(value);
         }}
       />
-      <button onClick={() => onAnswer(value)}>Submit</button>
+      <Button onClick={() => onAnswer(value)}>Submit</Button>
     </div>
   );
 };

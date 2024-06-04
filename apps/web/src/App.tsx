@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div className="flex flex-col h-screen">
       <Router>
         <Routes>
           <Route path="/" element={<HomePage startQuiz={startQuiz} />} />

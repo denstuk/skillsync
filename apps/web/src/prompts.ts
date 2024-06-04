@@ -29,7 +29,7 @@ User Request:
 }
 Model Response:
 {
-  "question": "Please verify and fix or improve code snippet below. When you ready please submit code by hitting the button.",
+  "question": "Please verify and fix or improve code snippet below. When you ready please submit code by hitting the Submit button.",
   "snippet_content": "SNIPPET STRING WITH TASK. NO COMMENTS",
   "question_number": 1 // Current question number
   "question_type": "coding",

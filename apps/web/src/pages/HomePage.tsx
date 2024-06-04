@@ -1,15 +1,19 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuestionType, QuizData } from "../types";
+import Input from "../components/form/Input";
+import FormLabel from "../components/form/FormLabel";
+import Layout from "../components/Layout";
+import Button from "../components/form/Button";
 
 interface HomePageProps {
   startQuiz: (data: QuizData) => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ startQuiz }) => {
-  const [topic, setTopic] = useState("React.js Expert");
+  const [topic, setTopic] = useState("");
   const [subtopics, setSubtopics] = useState("");
-  const [numQuestions, setNumQuestions] = useState(5);
+  const [numQuestions, setNumQuestions] = useState(1);
   const [questionType, setQuestionType] = useState<QuestionType>("coding");
   const navigate = useNavigate();
 
@@ -23,9 +27,9 @@ const HomePage: React.FC<HomePageProps> = ({ startQuiz }) => {
   const renderAdditionalOptions = useMemo(() => {
     if (questionType === "quiz") {
       return (
-        <label>
+        <FormLabel>
           Number of Questions:
-          <input
+          <Input
             type="number"
             value={numQuestions}
             onChange={(e) => setNumQuestions(parseInt(e.target.value))}
@@ -33,16 +37,17 @@ const HomePage: React.FC<HomePageProps> = ({ startQuiz }) => {
             max="15"
             required
           />
-        </label>
+        </FormLabel>
       );
     }
     if (questionType === "coding") {
       return (
         <div>
-          <label htmlFor="subtopics" style={{ display: "block" }}>
+          <FormLabel htmlFor="subtopics">
             Provide subtopics which you want task to be based on:
-          </label>
+          </FormLabel>
           <textarea
+            className="w-full mt-2 mb-6 rounded-md border h-[30px] min-h-[30px] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             name="subtopics"
             id="subtopics"
             value={subtopics}
@@ -55,37 +60,39 @@ const HomePage: React.FC<HomePageProps> = ({ startQuiz }) => {
   }, [numQuestions, questionType, subtopics]);
 
   return (
-    <div className="home-page">
-      <h1>Welcome to the Quiz App</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <Layout>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded-lg w-full max-w-3xl p-6"
+      >
+        <FormLabel>
           Quiz Topic:
-          <input
+          <Input
+            placeholder="For example: React.js"
             type="text"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             required
           />
-        </label>
-        <br />
-        <br />
-        <label htmlFor="q-type">QuestionType:</label>
+        </FormLabel>
+        <FormLabel className="text-lg font-bold" htmlFor="q-type">
+          QuestionType:
+        </FormLabel>
         <select
           name="q-type"
           id="q-type"
+          className="px-1 mt-2 mb-6 font-sans font-normal h-[30px] border rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           onChange={(e) => {
-            setQuestionType(e.target.value as any);
+            setQuestionType(e.target.value as QuestionType);
           }}
         >
           <option value="coding">Coding</option>
           <option value="quiz">Quiz</option>
         </select>
-        <br />
         <div>{renderAdditionalOptions}</div>
-
-        <button type="submit">Start Quiz</button>
+        <Button>Start</Button>
       </form>
-    </div>
+    </Layout>
   );
 };
 
