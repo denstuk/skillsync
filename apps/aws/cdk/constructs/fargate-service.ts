@@ -1,9 +1,9 @@
-import { Construct } from "constructs";
-import { Config } from "../config";
+import { CfnOutput } from "aws-cdk-lib";
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ecs_patterns from 'aws-cdk-lib/aws-ecs-patterns';
-import { CfnOutput } from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { Config } from "../config";
 
 export class FargateService extends Construct {
     constructor(scope: Construct, id: string) {
@@ -23,6 +23,7 @@ export class FargateService extends Construct {
           image: ecs.ContainerImage.fromAsset(Config.backendPath),
           containerPort: Config.backendPort,
           containerName: Config.appName,
+          environment: Config.backendEnvironment,
         },
         publicLoadBalancer: true
       });
