@@ -3,7 +3,13 @@ name: 🚀 Deploy
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - "apps/aws/**"
+      - "apps/web/**"
+      - "apps/backend/**"
+  workflow_dispatch:
 
 env:
   ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
