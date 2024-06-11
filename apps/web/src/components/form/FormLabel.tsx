@@ -1,12 +1,11 @@
-import { FC, LabelHTMLAttributes } from "react";
+import { FC } from "react";
+import { Text, TextProps } from "@radix-ui/themes";
 
-interface Props extends LabelHTMLAttributes<HTMLLabelElement> {}
-
-const FormLabel: FC<Props> = (props) => {
+const FormLabel: FC<TextProps> = (props) => {
   return (
-    <label className="block text-lg font-bold" {...props}>
+    <Text size="2" mb="1" weight="bold" as="label" {...props}>
       {props.children}
-    </label>
+    </Text>
   );
 };
 

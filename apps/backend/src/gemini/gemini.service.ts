@@ -8,6 +8,15 @@ export class GeminiService {
     @Inject('GEMINI_MODEL') private readonly model: GenerativeModel,
   ) {}
 
+  async ask(message: string): Promise<string> {
+    const result = await this.model.generateContent(message);
+    const response = await result.response;
+    return response
+      .text()
+      .trim()
+      .replace(/^```json\s+|\s+```$/gm, '');
+  }
+
   async generateQuiz(topic: string, numQuestions: number): Promise<Quiz> {
     const request: GenerateContentRequest = {
       contents: [
