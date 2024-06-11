@@ -5,7 +5,8 @@ import QuizPage from "./pages/QuizPage";
 import ResultsPage from "./pages/ResultsPage";
 import { QuizData, AnswerResponse } from "./types";
 import { QuizSessionProvider } from "./context/QuizSessionContext";
-
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 function App() {
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [results, setResults] = useState<AnswerResponse | null>(null);
@@ -20,7 +21,14 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <Theme
+      appearance="dark"
+      accentColor="green"
+      grayColor="sand"
+      panelBackground="solid"
+      radius="large"
+      scaling="95%"
+    >
       <Router>
         <Routes>
           <Route path="/" element={<HomePage startQuiz={startQuiz} />} />
@@ -35,7 +43,7 @@ function App() {
           <Route path="/results" element={<ResultsPage results={results} />} />
         </Routes>
       </Router>
-    </div>
+    </Theme>
   );
 }
 
