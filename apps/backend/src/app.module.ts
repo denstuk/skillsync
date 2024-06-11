@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
 import { GeminiModule } from './gemini/gemini.module';
+import { ComposerModule } from './modules/composer/composer.module';
+import { TaskModule } from './modules/task/task.module';
 import { QuizModule } from './quiz/quiz.module';
 
 @Module({
@@ -12,6 +14,9 @@ import { QuizModule } from './quiz/quiz.module';
       isGlobal: true,
     }),
     GeminiModule,
+    QuizModule,
+    TaskModule,
+    ComposerModule,
     QuizModule,
   ],
   controllers: [AppController],

@@ -21,6 +21,12 @@ export class Config {
       return 3000;
     }
 
+    static get backendEnvironment(): Record<string, string> {
+      return {
+        HTTP_PORT: this.backendPort.toString(),
+      }
+    }
+
     private static fromEnvOrThrow(name: string): string {
       const value = process.env[name]
       if (!value) {
