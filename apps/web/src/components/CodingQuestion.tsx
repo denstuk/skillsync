@@ -4,7 +4,7 @@ import "codemirror/theme/material.css";
 import React, { useState } from "react";
 import { Question } from "../types";
 import { UnControlled as CodeMirror } from "react-codemirror2";
-import Button from "./form/Button";
+import { Button, Flex, Heading } from "@radix-ui/themes";
 
 interface QuestionProps {
   question: Question;
@@ -16,12 +16,11 @@ const CodingQuestion: React.FC<QuestionProps> = ({ question, onAnswer }) => {
   const [value, setValue] = useState(initialValue || "");
 
   return (
-    <div className="bg-white shadow-md rounded-lg w-full max-w-3xl p-6">
-      <p className="text-xl font-bold">{question.question}</p>
+    <Flex gap={"4"} direction={"column"}>
+      <Heading>{question.question}</Heading>
       <CodeMirror
         //no need to make it controlled component
         value={initialValue}
-        className="my-4"
         options={{
           mode: "javascript",
           theme: "material",
@@ -31,8 +30,10 @@ const CodingQuestion: React.FC<QuestionProps> = ({ question, onAnswer }) => {
           setValue(value);
         }}
       />
-      <Button onClick={() => onAnswer(value)}>Submit</Button>
-    </div>
+      <Flex justify={"end"}>
+        <Button onClick={() => onAnswer(value)}>Submit</Button>
+      </Flex>
+    </Flex>
   );
 };
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AnswerResponse } from "../types";
 import CodingFeedback from "../components/CodingFeedback";
 import Layout from "../components/Layout";
-import Button from "../components/form/Button";
+import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 
 interface ResultsPageProps {
   results: AnswerResponse | null;
@@ -26,20 +26,26 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ results }) => {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold">Quiz Results</h2>
-      <div className="bg-white shadow-md rounded-lg w-full  p-6 my-4">
-        <p className="text-lg font-bold text-center">{results.feedback}</p>
-      </div>
-      {results?.feedback_code && (
-        <>
-          <p className="text-lg font-bold text-center">Solution:</p>
-          <CodingFeedback
-            task={results.snippet_content || ""}
-            solution={results?.feedback_code}
-          />
-        </>
-      )}
-      <Button onClick={handleClick}>Go to Home</Button>
+      <Flex direction={"column"} gap={"4"}>
+        <Heading>Quiz Results</Heading>
+
+        <Text as="div" size={"4"}>
+          {results.feedback}
+        </Text>
+
+        {results?.feedback_code && (
+          <>
+            <Heading size={"5"}>Solution:</Heading>
+            <CodingFeedback
+              task={results.snippet_content || ""}
+              solution={results?.feedback_code}
+            />
+          </>
+        )}
+        <Flex justify={"center"}>
+          <Button onClick={handleClick}>Go to Home</Button>
+        </Flex>
+      </Flex>
     </Layout>
   );
 };
