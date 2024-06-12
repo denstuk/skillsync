@@ -1,7 +1,6 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { LogMiddleware } from './common/middlewares/log.middleware';
 import { GeminiModule } from './gemini/gemini.module';
 import { ComposerModule } from './modules/composer/composer.module';
 import { TaskModule } from './modules/task/task.module';
@@ -19,7 +18,9 @@ import { QuizModule } from './quiz/quiz.module';
     ComposerModule,
     QuizModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogMiddleware).forRoutes('*');
+  }
+}

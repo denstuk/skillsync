@@ -1,12 +1,14 @@
+import { Theme } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
 import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { QuizSessionProvider } from "./context/QuizSessionContext";
+import { QuizDemoPage } from "./pages/Experimental/QuizDemoPage";
+import { QuizHomePage } from "./pages/Experimental/QuizHomePage";
 import HomePage from "./pages/HomePage";
 import QuizPage from "./pages/QuizPage";
 import ResultsPage from "./pages/ResultsPage";
-import { QuizData, AnswerResponse } from "./types";
-import { QuizSessionProvider } from "./context/QuizSessionContext";
-import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
+import { AnswerResponse, QuizData } from "./types";
 function App() {
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [results, setResults] = useState<AnswerResponse | null>(null);
@@ -27,7 +29,7 @@ function App() {
       grayColor="sand"
       panelBackground="solid"
       radius="large"
-      scaling="95%"
+      scaling="100%"
     >
       <Router>
         <Routes>
@@ -41,6 +43,8 @@ function App() {
             }
           />
           <Route path="/results" element={<ResultsPage results={results} />} />
+          <Route path="/experiment" element={<QuizDemoPage />} />
+          <Route path="/experiment/home" element={<QuizHomePage />} />
         </Routes>
       </Router>
     </Theme>
