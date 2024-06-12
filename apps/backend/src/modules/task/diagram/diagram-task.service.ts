@@ -37,7 +37,10 @@ export class DiagramTaskService {
   constructor(private readonly googleService: GoogleService) {}
 
   async create(): Promise<DiagramTask> {
-    const task = await this.googleService.ask(TASK_GENERATE_PROMPT);
+    const task = (await this.googleService.ask(TASK_GENERATE_PROMPT))
+      .replace(/```json/g, '')
+      .replace(/```/g, '');
+
     return JSON.parse(task) as DiagramTask;
   }
 
