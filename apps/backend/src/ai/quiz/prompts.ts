@@ -8,35 +8,35 @@ export class Prompts {
   generateQuiz(skill: string, level: string, topics: string[]) {
     return `
       You are the quiz master. Generate only quiz that includes 20 questions for assesses "${skill}" skill at an "${level}" level. You must use following topics in quiz: ${topics.join(', ')}. Your answer must include only tasks in the following JSON format. Use task format described in these TypeScript interfaces:
-      export interface BaseTask {
+      interface BaseTask {
         type: TaskType;
         question: string;
       }
 
-      export interface SingleChoiceTask extends BaseTask {
+      interface SingleChoiceTask extends BaseTask {
         type: TaskType.SingleChoice;
         options: string[];
       }
 
-      export interface MultipleChoiceTask extends BaseTask {
+      interface MultipleChoiceTask extends BaseTask {
         type: TaskType.MultipleChoice;
         options: string[];
       }
 
-      export interface OpenTask extends BaseTask {
+      interface OpenTask extends BaseTask {
         type: TaskType.Open;
       }
 
-      export interface CodeTask extends BaseTask {
+      interface CodeTask extends BaseTask {
         type: TaskType.Code;
       }
 
-      export interface FixCodeTask extends BaseTask {
+      interface FixCodeTask extends BaseTask {
         type: TaskType.FixCode;
         content: string;
       }
 
-      export type Task =
+      type Task =
         | SingleChoiceTask
         | MultipleChoiceTask
         | OpenTask
@@ -44,6 +44,9 @@ export class Prompts {
         | FixCodeTask;
 
       You can use different types of Task that you consider most suitable to cover the topic.
+      return valid JSON string with array of Tasks
+
+      NOTE: for FixCodeTask under content field use SNIPPET OF CODE IN PLAIN STRING
     `;
   }
 
