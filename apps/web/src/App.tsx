@@ -1,27 +1,11 @@
-import { Theme } from "@radix-ui/themes";
-import "@radix-ui/themes/styles.css";
-import { useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { QuizSessionProvider } from "./context/QuizSessionContext";
-import { QuizDemoPage } from "./pages/Experimental/QuizDemoPage";
-import { QuizHomePage } from "./pages/Experimental/QuizHomePage";
-import HomePage from "./pages/HomePage";
-import QuizPage from "./pages/QuizPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ResultsPage from "./pages/ResultsPage";
-import { AnswerResponse, QuizData } from "./types";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
+import { QuizSessionPage } from "./pages/QuizSessionPage";
+import { QuizHomePage } from "./pages/Experimental/QuizHomePage";
+
 function App() {
-  const [quizData, setQuizData] = useState<QuizData | null>(null);
-  const [results, setResults] = useState<AnswerResponse | null>(null);
-
-  const startQuiz = (data: QuizData) => {
-    setQuizData(data);
-    setResults(null);
-  };
-
-  const endQuiz = (result: AnswerResponse) => {
-    setResults(result);
-  };
-
   return (
     <Theme
       appearance="dark"
@@ -33,18 +17,9 @@ function App() {
     >
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage startQuiz={startQuiz} />} />
-          <Route
-            path="/quiz"
-            element={
-              <QuizSessionProvider quizData={quizData}>
-                <QuizPage quizData={quizData} endQuiz={endQuiz} />
-              </QuizSessionProvider>
-            }
-          />
-          <Route path="/results" element={<ResultsPage results={results} />} />
-          <Route path="/experiment" element={<QuizDemoPage />} />
-          <Route path="/experiment/home" element={<QuizHomePage />} />
+          <Route path="/" element={<QuizHomePage />} />
+          <Route path="/quiz" element={<QuizSessionPage />} />
+          <Route path="/results" element={<ResultsPage />} />
         </Routes>
       </Router>
     </Theme>

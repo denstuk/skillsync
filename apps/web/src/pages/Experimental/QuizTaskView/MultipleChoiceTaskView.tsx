@@ -8,14 +8,20 @@ type MultipleChoiceTaskViewProps = {
   onSkipAnswer: () => void;
 };
 
-export const MultipleChoiceTaskView: FC<MultipleChoiceTaskViewProps> = ({ options, onSubmitAnswer, onSkipAnswer }: MultipleChoiceTaskViewProps) => {
+export const MultipleChoiceTaskView: FC<MultipleChoiceTaskViewProps> = ({
+  options,
+  onSubmitAnswer,
+  onSkipAnswer,
+}: MultipleChoiceTaskViewProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const onRadioCardClick = (option: string) => {
     const isSelected = selectedOptions.includes(option);
 
     if (isSelected) {
-      setSelectedOptions(selectedOptions.filter((selectedOption) => selectedOption !== option));
+      setSelectedOptions(
+        selectedOptions.filter((selectedOption) => selectedOption !== option)
+      );
     } else {
       setSelectedOptions([...selectedOptions, option]);
     }
@@ -27,14 +33,16 @@ export const MultipleChoiceTaskView: FC<MultipleChoiceTaskViewProps> = ({ option
 
   return (
     <Flex direction="column">
-
       <Flex direction="column" gap="4" width="100%">
         {options.map((option, index) => (
-          <RadioCards.Root name="question" variant="surface">
+          <RadioCards.Root
+            key={`${option}_${index}`}
+            name="question"
+            variant="surface"
+          >
             <RadioCards.Item
               checked={selectedOptions.includes(option)}
               value={option}
-              key={index}
               onClick={() => onRadioCardClick(option)}
             >
               <Text size="4">{option}</Text>
@@ -44,9 +52,23 @@ export const MultipleChoiceTaskView: FC<MultipleChoiceTaskViewProps> = ({ option
       </Flex>
 
       <Flex mt="9" gap="3">
-        <Button size="4" color="gray" className="cursor-pointer w-full" onClick={onSkipAnswer}>Skip</Button>
-        <Button size="4" color="green" className="cursor-pointer w-full" onClick={onSubmitButtonClick}>Submit</Button>
+        <Button
+          size="4"
+          color="gray"
+          className="cursor-pointer w-full"
+          onClick={onSkipAnswer}
+        >
+          Skip
+        </Button>
+        <Button
+          size="4"
+          color="green"
+          className="cursor-pointer w-full"
+          onClick={onSubmitButtonClick}
+        >
+          Submit
+        </Button>
       </Flex>
     </Flex>
-  )
+  );
 };

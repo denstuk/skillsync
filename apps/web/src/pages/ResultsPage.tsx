@@ -1,28 +1,15 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { AnswerResponse } from "../types";
-import CodingFeedback from "../components/CodingFeedback";
+import { FC } from "react";
+import { RouteProps, useLocation, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 
-interface ResultsPageProps {
-  results: AnswerResponse | null;
-}
-
-const ResultsPage: React.FC<ResultsPageProps> = ({ results }) => {
+const ResultsPage: FC<RouteProps> = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!results) {
-      navigate("/");
-    }
-  }, [navigate, results]);
+  const { state } = useLocation();
 
   const handleClick = () => {
     navigate("/");
   };
-
-  if (!results) return null;
 
   return (
     <Layout>
@@ -30,18 +17,18 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ results }) => {
         <Heading>Quiz Results</Heading>
 
         <Text as="div" size={"4"}>
-          {results.feedback}
+          {state?.recommendations}
         </Text>
 
-        {results?.feedback_code && (
+        {/* {session?.session?.results?.feedback_code && (
           <>
             <Heading size={"5"}>Solution:</Heading>
             <CodingFeedback
-              task={results.snippet_content || ""}
-              solution={results?.feedback_code}
+              task={session?.session?.results.snippet_content || ""}
+              solution={session?.session?.results?.feedback_code}
             />
           </>
-        )}
+        )} */}
         <Flex justify={"center"}>
           <Button onClick={handleClick}>Go to Home</Button>
         </Flex>
