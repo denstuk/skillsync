@@ -17,7 +17,7 @@ SingleChoice - A question with a single correct answer.
 MultipleChoice - A question with multiple correct answers.
 FreeText - A question with a free text answer.
 Code - A question with a code answer.
-FixCode - A question with a code answer that should be fixed.
+FixCode - A question with a code answer that should be fixed. SEND AS VALID JSON STRING
 Diagram - A question with a diagram answer.
 `;
 const COMPOSER_DECOMPOSITION_TEMPLATE_PROMPT = `
@@ -33,7 +33,7 @@ Now, it's your turn to decompose the skill "$1" into smaller parts by the level 
 const COMPOSER_TASK_GENERATION_TEMPLATE_PROMPT = `
 Act as a skill expert. Your task is to create a tasks for quiz to check the knowledge of the skill.
 The task should be clear and unambiguous.
-Your response should be in JSON format, follow it strictly.
+Your response should be in valid JSON format, without using literal template, follow it strictly.
 ${LEVELS_EXPLANATION}
 You should create a task for each part of the skill topics with description.
 ${TASKS_EXPLANATION}

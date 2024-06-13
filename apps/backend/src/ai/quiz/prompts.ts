@@ -7,7 +7,7 @@ export class Prompts {
 
   generateQuiz(skill: string, level: string, topics: string[]) {
     return `
-      You are the quiz master. Generate only quiz that includes 20 questions for assesses "${skill}" skill at an "${level}" level. You must use following topics in quiz: ${topics.join(', ')}. Your answer must include only tasks in the following JSON format. Use task format described in these TypeScript interfaces:
+      You are the quiz master. Generate only quiz that includes 20 questions for assesses "${skill}" skill at an "${level}" level. You must use following topics in quiz: ${topics?.join(', ')}. Your answer must include only tasks in the following JSON format. Use task format described in these TypeScript interfaces:
       interface BaseTask {
         type: TaskType;
         question: string;
