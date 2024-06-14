@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleService } from '../common/google.service';
 import { TemplateService } from '../common/template.service';
+import { RoadmapService } from '../roadmap/roadmap.service';
 import { ComposerCreateDto } from './dtos/composer-create.dto';
 import { ISkillTopic, ITask } from './types';
 
@@ -58,6 +59,7 @@ export class ComposerService {
   constructor(
     private readonly googleService: GoogleService,
     private readonly templateService: TemplateService,
+    private readonly roadmapService: RoadmapService,
   ) {}
 
   async compose({ skill, level }: ComposerCreateDto): Promise<ITask[]> {
@@ -76,6 +78,13 @@ export class ComposerService {
       acc += `${topic.name} - ${topic.description}\n`;
       return acc;
     }, '');
+
+    const roadmap = await this.roadmapService.create({
+      skill,
+      level,
+      topics: topics.map((topic) => topic.description),
+    });
+    console.log(roadmap);
 
     const taskPrompt = this.templateService.make(
       COMPOSER_TASK_GENERATION_TEMPLATE_PROMPT,

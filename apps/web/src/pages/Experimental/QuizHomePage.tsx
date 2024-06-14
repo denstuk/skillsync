@@ -7,9 +7,9 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { FC, useState } from "react";
-import FormLabel from "../../components/form/FormLabel";
-import { SkillLevel } from "../../api/types";
 import { useNavigate } from "react-router-dom";
+import { SkillLevel } from "../../api/types";
+import FormLabel from "../../components/form/FormLabel";
 
 export const QuizHomePage: FC = () => {
   const [skill, setSkill] = useState("");
