@@ -5,16 +5,16 @@ import {
   ISingleChoiceTask,
   TaskType,
 } from "../../api/types";
-import { QuizLoaderOverlay } from "./QuizLoaderOverlay/QuizLoaderOverlay";
+import { QuizLoaderOverlay } from "../../components/QuizLoaderOverlay/QuizLoaderOverlay";
+import { QuestionAndAnswersContext } from "../../context/QuestionAndAnswerContext";
+import { SkillAndLevelContext } from "../../context/SkillAndLevelContext";
+import { TasksContext } from "../../context/TasksContext";
 import { CodeTaskView } from "./QuizTaskView/CodeTaskView";
 import { DiagramTaskView } from "./QuizTaskView/DiagramTaskView";
 import { FreeTextTaskView } from "./QuizTaskView/FreeTextTaskView";
 import { MultipleChoiceTaskView } from "./QuizTaskView/MultipleChoiceTaskView";
 import { PlaceHolderTaskView } from "./QuizTaskView/PlaceHolderTaskView";
 import { SingleChoiceTaskView } from "./QuizTaskView/SingleChoiceTaskView";
-import { TasksContext } from "../../context/TasksContext";
-import { QuestionAndAnswersContext } from "../../context/QuestionAndAnswerContext";
-import { SkillAndLevelContext } from "../../context/SkillAndLevelContext";
 
 export const QuizDemoPage: FC = (): React.ReactNode => {
   const { tasks, tasksLoading: loading } = useContext(TasksContext);

@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ResultsPage from "./pages/ResultsPage";
-import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-import { QuizSessionPage } from "./pages/QuizSessionPage";
-import { QuizHomePage } from "./pages/Experimental/QuizHomePage";
+import "@radix-ui/themes/styles.css";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { HomePage } from "./pages/HomePage/HomePage";
+import { QuizPage } from "./pages/QuizPage/QuizPage";
+import ResultsPage from "./pages/ResultsPage/ResultsPage";
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
     >
       <Router>
         <Routes>
-          <Route path="/" element={<QuizHomePage />} />
-          <Route path="/quiz" element={<QuizSessionPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/quiz" element={<QuizPage />} />
           <Route path="/results" element={<ResultsPage />} />
         </Routes>
       </Router>
