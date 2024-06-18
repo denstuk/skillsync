@@ -1,7 +1,7 @@
+import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { FC } from "react";
 import { RouteProps, useLocation, useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
-import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import Layout from "../../components/Layout";
 
 const ResultsPage: FC<RouteProps> = () => {
   const navigate = useNavigate();
