@@ -1,11 +1,16 @@
+import {
+  IsEnum,
+  IsString,
+  IsArray,
+  ArrayNotEmpty,
+  ValidateNested,
+  IsNumber,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
 export class CreateQuizDto {
   skill: string;
   level: string;
-  topics: string[];
-}
-
-export class CreateQuizResponseDto {
-  tasks: Task[];
 }
 
 export enum TaskType {
@@ -16,32 +21,69 @@ export enum TaskType {
   FixCode = 'FixCode',
 }
 
-export interface BaseTask {
+export class BaseTask {
+  @IsEnum(TaskType)
   type: TaskType;
+
+  @IsString()
   question: string;
 }
 
-export interface SingleChoiceTask extends BaseTask {
+export class SingleChoiceTask extends BaseTask {
+  @IsEnum(TaskType)
   type: TaskType.SingleChoice;
+
+  @ArrayNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
   options: string[];
 }
 
-export interface MultipleChoiceTask extends BaseTask {
+export class MultipleChoiceTask extends BaseTask {
+  @IsEnum(TaskType)
   type: TaskType.MultipleChoice;
+
+  @ArrayNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
   options: string[];
 }
 
-export interface OpenTask extends BaseTask {
+export class OpenTask extends BaseTask {
+  @IsEnum(TaskType)
   type: TaskType.Open;
 }
 
-export interface CodeTask extends BaseTask {
+export class CodeTask extends BaseTask {
+  @IsEnum(TaskType)
   type: TaskType.Code;
 }
 
-export interface FixCodeTask extends BaseTask {
+export class FixCodeTask extends BaseTask {
+  @IsEnum(TaskType)
   type: TaskType.FixCode;
+
+  @IsString()
   content: string;
+}
+
+export class Quiz {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => BaseTask, {
+    discriminator: {
+      property: 'type',
+      subTypes: [
+        { value: SingleChoiceTask, name: 'SingleChoice' },
+        { value: MultipleChoiceTask, name: 'MultipleChoice' },
+        { value: OpenTask, name: 'Open' },
+        { value: CodeTask, name: 'Code' },
+        { value: FixCodeTask, name: 'FixCode' },
+      ],
+    },
+    keepDiscriminatorProperty: true,
+  })
+  tasks: Task[];
 }
 
 export type Task =
@@ -56,15 +98,42 @@ export class SubmitQuizDto {
   answers: string[];
 }
 
-export interface Result {
+class TaskResult {
+  @ValidateNested()
+  @Type(() => BaseTask, {
+    discriminator: {
+      property: 'type',
+      subTypes: [
+        { value: SingleChoiceTask, name: 'SingleChoice' },
+        { value: MultipleChoiceTask, name: 'MultipleChoice' },
+        { value: OpenTask, name: 'Open' },
+        { value: CodeTask, name: 'Code' },
+        { value: FixCodeTask, name: 'FixCode' },
+      ],
+    },
+    keepDiscriminatorProperty: true,
+  })
   task: Task;
+
+  @IsString()
   answer: string;
+
+  @IsString()
   message: string;
 }
 
-export interface QuizResult {
+export class QuizResult {
+  @IsNumber()
   totalScore: number;
+
+  @IsNumber()
   score: number;
+
+  @IsString()
   recommendations: string;
-  results: Result[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TaskResult)
+  results: TaskResult[];
 }
