@@ -1,6 +1,7 @@
+import { QuizResult } from "../types";
 import { SkillLevel, Task, TaskAnswer } from "./types";
 
-const API_ENDPOINT = 'http://localhost:3000';
+const API_ENDPOINT = "http://localhost:3000";
 
 type ICreateQuizParams = {
   readonly skill: string;
@@ -8,22 +9,26 @@ type ICreateQuizParams = {
   readonly topics: string[];
 };
 
-export const createQuiz = async (params: ICreateQuizParams): Promise<Task[]> => {
+export const createQuiz = async (
+  params: ICreateQuizParams
+): Promise<Task[]> => {
   const url = new URL(`${API_ENDPOINT}/api/quiz`);
   return await request<Task[]>(url, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(params),
   });
 };
 
-export const composeQuiz = async (params: Omit<ICreateQuizParams, 'topics'>): Promise<Task[]> => {
+export const composeQuiz = async (
+  params: Omit<ICreateQuizParams, "topics">
+): Promise<Task[]> => {
   const url = new URL(`${API_ENDPOINT}/api/quiz/composer`);
   return await request<Task[]>(url, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(params),
     headers: {
-      'Content-Type': 'application/json',
-    }
+      "Content-Type": "application/json",
+    },
   });
 };
 
@@ -32,15 +37,24 @@ type ISubmitQuizParams = {
   readonly answers: TaskAnswer[];
 };
 
-export const submitQuiz = async (params: ISubmitQuizParams): Promise<Task[]> => {
+export const submitQuiz = async (
+  params: ISubmitQuizParams
+): Promise<QuizResult> => {
   const url = new URL(`${API_ENDPOINT}/api/quiz/submit`);
-  return await request<Task[]>(url, {
-    method: 'POST',
-    body: JSON.stringify(params),
+  const body = JSON.stringify(params);
+  return await request<QuizResult>(url, {
+    method: "POST",
+    body,
+    headers: new Headers({
+      "content-type": "application/json",
+    }),
   });
 };
 
-const request = async <T>(url: string | URL, options: RequestInit): Promise<T> => {
+const request = async <T>(
+  url: string | URL,
+  options: RequestInit
+): Promise<T> => {
   const response = await fetch(url, options);
 
   if (!response.ok) {
@@ -48,4 +62,4 @@ const request = async <T>(url: string | URL, options: RequestInit): Promise<T> =
   }
 
   return response.json();
-}
+};
