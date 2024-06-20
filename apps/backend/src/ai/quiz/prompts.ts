@@ -90,6 +90,7 @@ export class Prompts {
           task: Task;
           answer: string;
           message: string;
+          correct: boolean;
         }
 
         export interface QuizResult {
@@ -106,6 +107,7 @@ export class Prompts {
         - task: the original object of the task
         - answer: the original answer from user
         - message : your verdict on the answer, describe why you think the answer is correct or incorrect
+        - correct: true if user answer correct false if not
 
         Array of tasks: ${JSON.stringify(tasks)}
 
