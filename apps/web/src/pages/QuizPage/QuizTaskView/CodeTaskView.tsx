@@ -9,10 +9,15 @@ import { ICodeAnswer } from "../../../api/types";
 type CodeTaskViewProps = {
   onSubmitAnswer: (answer: ICodeAnswer) => void;
   onSkipAnswer: () => void;
+  codeSnippet?: string;
 };
 
-export const CodeTaskView: FC<CodeTaskViewProps> = ({ onSubmitAnswer, onSkipAnswer }: CodeTaskViewProps) => {
-  const [value, setValue] = useState('');
+export const CodeTaskView: FC<CodeTaskViewProps> = ({
+  onSubmitAnswer,
+  onSkipAnswer,
+  codeSnippet = "",
+}: CodeTaskViewProps) => {
+  const [value, setValue] = useState("");
 
   const onSubmitButtonClick = () => {
     onSubmitAnswer({ answer: value });
@@ -20,9 +25,8 @@ export const CodeTaskView: FC<CodeTaskViewProps> = ({ onSubmitAnswer, onSkipAnsw
 
   return (
     <Flex gap={"4"} direction={"column"}>
-
       <CodeMirror
-        value={''}
+        value={codeSnippet}
         options={{
           mode: "javascript",
           theme: "material",
@@ -34,8 +38,22 @@ export const CodeTaskView: FC<CodeTaskViewProps> = ({ onSubmitAnswer, onSkipAnsw
       />
 
       <Flex mt="9" gap="3">
-        <Button size="4" color="gray" className="cursor-pointer w-full" onClick={onSkipAnswer}>Skip</Button>
-        <Button size="4" color="green" className="cursor-pointer w-full" onClick={onSubmitButtonClick}>Submit</Button>
+        <Button
+          size="4"
+          color="gray"
+          className="cursor-pointer w-full"
+          onClick={onSkipAnswer}
+        >
+          Skip
+        </Button>
+        <Button
+          size="4"
+          color="green"
+          className="cursor-pointer w-full"
+          onClick={onSubmitButtonClick}
+        >
+          Submit
+        </Button>
       </Flex>
     </Flex>
   );

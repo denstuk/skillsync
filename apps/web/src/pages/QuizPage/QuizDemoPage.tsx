@@ -10,7 +10,6 @@ import { QuestionAndAnswersContext } from "../../context/QuestionAndAnswerContex
 import { SkillAndLevelContext } from "../../context/SkillAndLevelContext";
 import { TasksContext } from "../../context/TasksContext";
 import { CodeTaskView } from "./QuizTaskView/CodeTaskView";
-import { DiagramTaskView } from "./QuizTaskView/DiagramTaskView";
 import { FreeTextTaskView } from "./QuizTaskView/FreeTextTaskView";
 import { MultipleChoiceTaskView } from "./QuizTaskView/MultipleChoiceTaskView";
 import { PlaceHolderTaskView } from "./QuizTaskView/PlaceHolderTaskView";
@@ -82,17 +81,18 @@ export const QuizDemoPage: FC = (): React.ReactNode => {
             onSubmitAnswer={answer}
             onSkipAnswer={onSkipAnswer}
           />
-        ) : currentTask.type === TaskType.FreeText ? (
+        ) : currentTask.type === TaskType.Open ? (
           <FreeTextTaskView
             onSubmitAnswer={answer}
             onSkipAnswer={onSkipAnswer}
           />
         ) : currentTask.type === TaskType.Code ? (
           <CodeTaskView onSubmitAnswer={answer} onSkipAnswer={onSkipAnswer} />
-        ) : currentTask.type === TaskType.Diagram ? (
-          <DiagramTaskView
+        ) : currentTask.type === TaskType.FixCode ? (
+          <CodeTaskView
             onSubmitAnswer={answer}
             onSkipAnswer={onSkipAnswer}
+            codeSnippet={currentTask?.content}
           />
         ) : (
           <PlaceHolderTaskView onSkipAnswer={onSkipAnswer} />

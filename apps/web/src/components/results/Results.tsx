@@ -6,10 +6,11 @@ import {
   TaskType,
 } from "../../types";
 import { SingleChoiceQuestionCard } from "../SingleChoiceQuestionCard";
-import { Card, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { Box, Card, Flex, Heading, Text, TextArea } from "@radix-ui/themes";
 import { TaskList } from "./TaskList";
 import { MultipleChoiceTaskCard } from "../MultipleChoiceTaskCard";
 import CodingFeedback from "../CodingFeedback";
+import Markdown from "react-markdown";
 
 type Props = {
   results: QuizResult["results"];
@@ -41,9 +42,16 @@ export const Results: FC<Props> = ({ results }) => {
   };
 
   const renderFreeFormAnswer = () => {
+    if (!resultsToShow.answer) {
+      return (
+        <Text ml={"2"} color="orange">
+          {"No answer"}
+        </Text>
+      );
+    }
     return (
-      <TextField.Root
-        variant="surface"
+      <TextArea
+        variant="soft"
         readOnly={true}
         value={resultsToShow.answer as string}
         size="3"
@@ -53,8 +61,8 @@ export const Results: FC<Props> = ({ results }) => {
   const renderCodingAnswer = () => {
     return (
       <CodingFeedback
-        task={resultsToShow.answer}
-        solution={resultsToShow.answer}
+        task={resultsToShow.answer as string}
+        solution={resultsToShow?.solution}
       />
     );
   };
@@ -65,7 +73,12 @@ export const Results: FC<Props> = ({ results }) => {
         openTaskResult={setTaskToShow}
         openTaskIndex={taskToShow}
       />
-      <Flex direction={"column"} flexGrow={"1"}>
+      <Flex
+        direction={"column"}
+        flexGrow={"1"}
+        overflowY={"scroll"}
+        height={"80vh"}
+      >
         <Heading mb={"4"} size={"5"}>
           Your answer:
         </Heading>
@@ -82,9 +95,11 @@ export const Results: FC<Props> = ({ results }) => {
         <Heading mt={"4"} mb={"4"} size={"5"}>
           Feedback:
         </Heading>
-        <Card variant="classic">
-          <Text>{resultsToShow.message}</Text>
-        </Card>
+        <Box>
+          <Card variant="classic">
+            <Markdown>{resultsToShow.message}</Markdown>
+          </Card>
+        </Box>
       </Flex>
     </Flex>
   );

@@ -84,6 +84,7 @@ export interface Result {
   answer: string | string[];
   message: string;
   correct: boolean;
+  solution?: string;
 }
 
 export interface QuizResult {

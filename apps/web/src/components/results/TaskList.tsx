@@ -1,12 +1,4 @@
-import {
-  Box,
-  Card,
-  Container,
-  Flex,
-  RadioCards,
-  ScrollArea,
-  Text,
-} from "@radix-ui/themes";
+import { Box, Flex, RadioCards, Text } from "@radix-ui/themes";
 import { FC } from "react";
 import { QuizResult } from "../../types";
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
@@ -28,7 +20,7 @@ export const TaskList: FC<Props> = ({
       flexBasis={"300px"}
       flexShrink={"0"}
       overflowY={"scroll"}
-      height={"75vh"}
+      height={"80vh"}
     >
       <RadioCards.Root>
         <Flex gap={"4"} direction={"column"} align={"start"}>

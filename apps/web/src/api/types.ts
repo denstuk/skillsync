@@ -40,6 +40,7 @@ export interface ICodeTask extends IBaseTask {
 export interface IFixCodeTask extends IBaseTask {
   type: TaskType.FixCode;
   code: string;
+  content: string;
 }
 
 export interface IDiagramTask extends IBaseTask {
@@ -83,8 +84,7 @@ export type TaskAnswer =
   | IMultipleChoiceAnswer
   | IFreeTextAnswer
   | ICodeAnswer
-  | IFixCodeAnswer
-  | IDiagramAnswer;
+  | IFixCodeAnswer;
 
 export interface ITaskResult {
   task: Task;

@@ -1,5 +1,5 @@
 import { QuizResult } from "../types";
-import { SkillLevel, Task, TaskAnswer } from "./types";
+import { SkillLevel, Task } from "./types";
 
 const API_ENDPOINT = "http://localhost:3000";
 
@@ -22,19 +22,21 @@ export const createQuiz = async (
 export const composeQuiz = async (
   params: Omit<ICreateQuizParams, "topics">
 ): Promise<Task[]> => {
-  const url = new URL(`${API_ENDPOINT}/api/quiz/composer`);
-  return await request<Task[]>(url, {
+  const url = new URL(`${API_ENDPOINT}/api/quiz`);
+  return await request<{ tasks: Task[] }>(url, {
     method: "POST",
     body: JSON.stringify(params),
     headers: {
       "Content-Type": "application/json",
     },
+  }).then((res) => {
+    return res.tasks;
   });
 };
 
-type ISubmitQuizParams = {
-  readonly questions: Task[];
-  readonly answers: TaskAnswer[];
+export type ISubmitQuizParams = {
+  readonly tasks: Task[];
+  readonly answers: string[];
 };
 
 export const submitQuiz = async (

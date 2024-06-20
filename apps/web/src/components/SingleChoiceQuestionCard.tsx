@@ -30,10 +30,9 @@ export const SingleChoiceQuestionCard: FC<Props> = ({
     }
 
     return (
-      <RadioCards.Root color={correct ? undefined : "red"}>
+      <RadioCards.Root color={correct ? undefined : "red"} key={index}>
         <RadioCards.Item
           value={option}
-          key={index}
           onClick={() => {
             onClick && onClick(option);
           }}
