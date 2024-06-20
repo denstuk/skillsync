@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { QuizResult, Task } from './dtos/quiz.dto';
+import { Quiz, QuizResult, Task } from './dtos/quiz.dto';
 import { IAiQuizService } from './interfaces/ai.quiz.service.interface';
 
 @Injectable()
@@ -8,15 +8,8 @@ export class QuizService {
     @Inject('IAiQuizService') private aiQuizService: IAiQuizService,
   ) {}
 
-  async getTopics(skill: string, level: string): Promise<string[]> {
-    return await this.aiQuizService.generateTopics(skill, level);
-  }
-
-  async getQuiz(
-    skill: string,
-    level: string,
-    topics: string[],
-  ): Promise<Task[]> {
+  async getQuiz(skill: string, level: string): Promise<Quiz> {
+    const topics = await this.aiQuizService.generateTopics(skill, level);
     return await this.aiQuizService.generateQuiz(skill, level, topics);
   }
 

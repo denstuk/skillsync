@@ -33,7 +33,7 @@ export const composeQuiz = async (
 };
 
 type ISubmitQuizParams = {
-  readonly tasks: Task[];
+  readonly questions: Task[];
   readonly answers: TaskAnswer[];
 };
 

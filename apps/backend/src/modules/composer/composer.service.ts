@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleService } from '../common/google.service';
 import { TemplateService } from '../common/template.service';
+import { RoadmapService } from '../roadmap/roadmap.service';
 import { ComposerCreateDto } from './dtos/composer-create.dto';
 import { ISkillTopic, ITask } from './types';
 
@@ -17,7 +18,7 @@ SingleChoice - A question with a single correct answer.
 MultipleChoice - A question with multiple correct answers.
 FreeText - A question with a free text answer.
 Code - A question with a code answer.
-FixCode - A question with a code answer that should be fixed.
+FixCode - A question with a code answer that should be fixed. SEND AS VALID JSON STRING
 Diagram - A question with a diagram answer.
 `;
 const COMPOSER_DECOMPOSITION_TEMPLATE_PROMPT = `
@@ -33,7 +34,7 @@ Now, it's your turn to decompose the skill "$1" into smaller parts by the level 
 const COMPOSER_TASK_GENERATION_TEMPLATE_PROMPT = `
 Act as a skill expert. Your task is to create a tasks for quiz to check the knowledge of the skill.
 The task should be clear and unambiguous.
-Your response should be in JSON format, follow it strictly.
+Your response should be in valid JSON format, without using literal template, follow it strictly.
 ${LEVELS_EXPLANATION}
 You should create a task for each part of the skill topics with description.
 ${TASKS_EXPLANATION}
@@ -58,6 +59,7 @@ export class ComposerService {
   constructor(
     private readonly googleService: GoogleService,
     private readonly templateService: TemplateService,
+    private readonly roadmapService: RoadmapService,
   ) {}
 
   async compose({ skill, level }: ComposerCreateDto): Promise<ITask[]> {
@@ -76,6 +78,13 @@ export class ComposerService {
       acc += `${topic.name} - ${topic.description}\n`;
       return acc;
     }, '');
+
+    const roadmap = await this.roadmapService.create({
+      skill,
+      level,
+      topics: topics.map((topic) => topic.description),
+    });
+    console.log(roadmap);
 
     const taskPrompt = this.templateService.make(
       COMPOSER_TASK_GENERATION_TEMPLATE_PROMPT,
