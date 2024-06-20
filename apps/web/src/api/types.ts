@@ -1,17 +1,17 @@
 export enum SkillLevel {
-  Novice = 'Novice',
-  Intermediate = 'Intermediate',
-  Advanced = 'Advanced',
-  Expert = 'Expert',
+  Novice = "Novice",
+  Intermediate = "Intermediate",
+  Advanced = "Advanced",
+  Expert = "Expert",
 }
 
 export enum TaskType {
-  SingleChoice = 'SingleChoice',
-  MultipleChoice = 'MultipleChoice',
-  FreeText = 'FreeText',
-  Code = 'Code',
-  FixCode = 'FixCode',
-  Diagram = 'Diagram',
+  SingleChoice = "SingleChoice",
+  MultipleChoice = "MultipleChoice",
+  Open = "Open",
+  Code = "Code",
+  FixCode = "FixCode",
+  Diagram = "Diagram",
 }
 
 export interface IBaseTask {
@@ -29,8 +29,8 @@ export interface IMultipleChoiceTask extends IBaseTask {
   options: string[];
 }
 
-export interface IFreeTextTask extends IBaseTask {
-  type: TaskType.FreeText;
+export interface IOpenTask extends IBaseTask {
+  type: TaskType.Open;
 }
 
 export interface ICodeTask extends IBaseTask {
@@ -46,7 +46,13 @@ export interface IDiagramTask extends IBaseTask {
   type: TaskType.Diagram;
 }
 
-export type Task = ISingleChoiceTask | IMultipleChoiceTask | IFreeTextTask | ICodeTask | IFixCodeTask | IDiagramTask;
+export type Task =
+  | ISingleChoiceTask
+  | IMultipleChoiceTask
+  | IOpenTask
+  | ICodeTask
+  | IFixCodeTask
+  | IDiagramTask;
 
 export interface ISingleChoiceAnswer {
   answer: string;
@@ -69,10 +75,16 @@ export interface IFixCodeAnswer {
 }
 
 export interface IDiagramAnswer {
-  image: string; /* base64 */
+  image: string /* base64 */;
 }
 
-export type TaskAnswer = ISingleChoiceAnswer | IMultipleChoiceAnswer | IFreeTextAnswer | ICodeAnswer | IFixCodeAnswer | IDiagramAnswer;
+export type TaskAnswer =
+  | ISingleChoiceAnswer
+  | IMultipleChoiceAnswer
+  | IFreeTextAnswer
+  | ICodeAnswer
+  | IFixCodeAnswer
+  | IDiagramAnswer;
 
 export interface ITaskResult {
   task: Task;
