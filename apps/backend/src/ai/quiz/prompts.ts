@@ -90,6 +90,8 @@ export class Prompts {
           task: Task;
           answer: string;
           message: string;
+          correct: boolean;
+          solution?: string;
         }
 
         export interface QuizResult {
@@ -101,12 +103,19 @@ export class Prompts {
         Description of QuizResult parameters:
         - totalScore : Number of questions
         - score : number of questions the user answered correctly
-        - recommendations : recommendations that you can give to the user to close the gaps
+        - recommendations : recommendations that you can give to the user to close the gaps overall. additionally provide results by task type in readable format(without writing task type or mentioning it). USE MARKDOWN HERE
+        [FOR SingleChoiceTask/MultipleChoiceTask/OpenTask]:
+        - Generall knowledge on topic: 10/15. Provide recommendation on specific topics which user lacks knowledge in
+        [FOR CodeTask/FixCodeTask]:
+        - Coding skills on topic: 3/5. Provide recommendation on specific topics which user fails coding at
+        coding results: 0/3
+        e.t.c and provide additional recommendation for each task type asked
         Description of Result parameters:
         - task: the original object of the task
         - answer: the original answer from user
-        - message : your verdict on the answer, describe why you think the answer is correct or incorrect
-
+        - message : your verdict on the answer, describe why you think the answer is correct or incorrect(without code snippet). USE MARKDOWN HERE
+        - correct: true if user answer correct false if not
+        - solution: in case of CodeTask OR FixCodeTask please provide your solution by plain string. Don't wrap in markdown
         Array of tasks: ${JSON.stringify(tasks)}
 
         Array of answers: ${JSON.stringify(answers)}

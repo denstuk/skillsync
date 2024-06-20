@@ -81,8 +81,10 @@ export type Task =
 
 export interface Result {
   task: Task;
-  answer: string;
+  answer: string | string[];
   message: string;
+  correct: boolean;
+  solution?: string;
 }
 
 export interface QuizResult {

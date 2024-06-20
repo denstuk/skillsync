@@ -7,8 +7,8 @@ import { Checkbox, Flex } from "@radix-ui/themes";
 import FormLabel from "./form/FormLabel";
 
 interface FeedbackProps {
-  solution: string;
   task: string;
+  solution?: string;
 }
 
 const CodingFeedback: React.FC<FeedbackProps> = ({ task, solution }) => {

@@ -5,6 +5,8 @@ import {
   ArrayNotEmpty,
   ValidateNested,
   IsNumber,
+  IsBoolean,
+  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -120,6 +122,13 @@ class TaskResult {
 
   @IsString()
   message: string;
+
+  @IsBoolean()
+  correct: boolean;
+
+  @IsOptional()
+  @IsString()
+  solution?: string;
 }
 
 export class QuizResult {

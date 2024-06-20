@@ -3,7 +3,7 @@ import "@radix-ui/themes/styles.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { QuizPage } from "./pages/QuizPage/QuizPage";
-import ResultsPage from "./pages/ResultsPage/ResultsPage";
+import ResultsPage from "./pages/ResultsPage";
 
 function App() {
   return (
